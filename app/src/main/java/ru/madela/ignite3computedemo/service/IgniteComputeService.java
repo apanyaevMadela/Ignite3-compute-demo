@@ -1,7 +1,7 @@
 package ru.madela.ignite3computedemo.service;
 
 import ru.madela.RapidRepeatJobResponse;
-import ru.madela.ignite3computedemo.dto.TransactionDto;
+import ru.madela.ignite3computedemo.model.TransactionModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface IgniteComputeService {
 
     Boolean primeCheck(Integer number);
-    List<TransactionDto> findByAccountId(UUID accountId);
+    List<TransactionModel> findByAccountId(UUID accountId);
 
     RapidRepeatJobResponse findRapidRepeats(UUID accountId);
 

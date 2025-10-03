@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.madela.RapidRepeatJobResponse;
-import ru.madela.ignite3computedemo.dto.TransactionDto;
+import ru.madela.ignite3computedemo.model.TransactionModel;
 import ru.madela.ignite3computedemo.service.IgniteComputeService;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class IgniteComputeController {
     }
 
     @GetMapping("find/{accountId}")
-    public List<TransactionDto> findByAccountId(@PathVariable UUID accountId) {
+    public List<TransactionModel> findByAccountId(@PathVariable UUID accountId) {
         return igniteComputeService.findByAccountId(accountId);
     }
 

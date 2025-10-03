@@ -1,6 +1,8 @@
-package ru.madela.ignite3computedemo.dto;
+package ru.madela.ignite3computedemo.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.ignite.catalog.annotations.*;
 
@@ -8,7 +10,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(
         value = "tx",
         zone = @Zone(
@@ -26,7 +30,7 @@ import java.util.UUID;
         }
 )
 @Accessors(chain = true)
-public class TransactionDto {
+public class TransactionModel {
 
     @Id
     private UUID id;

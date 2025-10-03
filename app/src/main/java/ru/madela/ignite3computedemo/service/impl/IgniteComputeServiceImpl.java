@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import ru.madela.RapidRepeatJob;
 import ru.madela.RapidRepeatJobResponse;
 import ru.madela.RapidRepeatResponseMarshaller;
-import ru.madela.ignite3computedemo.dto.TransactionDto;
+import ru.madela.ignite3computedemo.model.TransactionModel;
 import ru.madela.ignite3computedemo.repository.TransactionRepository;
 import ru.madela.ignite3computedemo.service.IgniteComputeService;
 
@@ -36,7 +36,7 @@ public class IgniteComputeServiceImpl implements IgniteComputeService {
         return igniteClient.compute().execute(jobTarget, job, number);
     }
 
-    public List<TransactionDto> findByAccountId(UUID accountId) {
+    public List<TransactionModel> findByAccountId(UUID accountId) {
         return transactionRepository.findByAccountId(accountId);
     }
 
@@ -54,7 +54,7 @@ public class IgniteComputeServiceImpl implements IgniteComputeService {
 
     @Override
     public List<RapidRepeatJobResponse> findAllAccountsRapidRepeats() {
-        List<TransactionDto> all = transactionRepository.findAll();
+        List<TransactionModel> all = transactionRepository.findAll();
         List<RapidRepeatJobResponse> accountIds = new ArrayList<>();
         all.forEach(t -> accountIds.add(findRapidRepeats(t.getAccountId())));
         return accountIds;

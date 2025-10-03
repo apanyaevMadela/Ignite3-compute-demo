@@ -7,7 +7,7 @@ import org.apache.ignite.table.Table;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.madela.ignite3computedemo.dto.TransactionDto;
+import ru.madela.ignite3computedemo.model.TransactionModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,53 +29,53 @@ public class IgniteConfig {
     }
 
     @Bean
-    public RecordView<TransactionDto> transactionRecordView(IgniteClient client) {
-        client.catalog().createTable(TransactionDto.class);
+    public RecordView<TransactionModel> transactionRecordView(IgniteClient client) {
+        client.catalog().createTable(TransactionModel.class);
         Table t = client.tables().table("tx");
-        RecordView<TransactionDto> transactionDtoRecordView = t.recordView(TransactionDto.class);
-        fillTable(transactionDtoRecordView);
-        return transactionDtoRecordView;
+        RecordView<TransactionModel> transactionModelRecordView = t.recordView(TransactionModel.class);
+        fillTable(transactionModelRecordView);
+        return transactionModelRecordView;
     }
 
-    private void fillTable(RecordView<TransactionDto> transactionDtoRecordView) {
+    private void fillTable(RecordView<TransactionModel> transactionModelRecordView) {
         UUID uuidTrue = UUID.randomUUID();
         UUID uuidFalse = UUID.randomUUID();
         LocalDateTime now = LocalDateTime.now();
         log.info("uuid for true: {}", uuidTrue);
         log.info("uuid for false: {}", uuidFalse);
-        List<TransactionDto> batch = List.of(
-                new TransactionDto()
+        List<TransactionModel> batch = List.of(
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidTrue)
                         .setAmount(new BigDecimal("12"))
                         .setDateTime(now),
-                new TransactionDto()
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidTrue)
                         .setAmount(new BigDecimal("13"))
                         .setDateTime(now.plusSeconds(2)),
-                new TransactionDto()
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidTrue)
                         .setAmount(new BigDecimal("14"))
                         .setDateTime(now.plusSeconds(4)),
-                new TransactionDto()
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidFalse)
                         .setAmount(new BigDecimal("12"))
                         .setDateTime(now),
-                new TransactionDto()
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidFalse)
                         .setAmount(new BigDecimal("13"))
                         .setDateTime(now.plusSeconds(31)),
-                new TransactionDto()
+                new TransactionModel()
                         .setId(UUID.randomUUID())
                         .setAccountId(uuidFalse)
                         .setAmount(new BigDecimal("14"))
                         .setDateTime(now.plusSeconds(62))
         );
-        transactionDtoRecordView.upsertAll(null, batch);
+        transactionModelRecordView.upsertAll(null, batch);
     }
 
 }
